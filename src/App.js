@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { increment, decrement } from './reduxSetUp/actions/creators.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h3>counter <span>{this.props.conteur}</span></h3>
+        <button onClick={this.props.incrmt}>+</button>
+        <button onClick={this.props.decmnt}>-</button>
+      </div>
+    );
+}
+}
+const mapStateToProps = state => {
+  return {
+    conteur : state.count
+  }
+}
+const mapDispatchToProps = dispatch =>{
+  return {
+    incrmt : ()=>dispatch(increment()),
+    decmnt : ()=>dispatch(decrement())
+  }
 }
 
-export default App;
+export default connect (mapStateToProps,mapDispatchToProps)(App);
